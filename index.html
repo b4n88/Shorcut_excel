@@ -208,35 +208,61 @@
 <script>
     // DATA LENGKAP
     const masterData = [
-        ["Ctrl + C", "Menyalin data (Copy)"],
-        ["Ctrl + X", "Memotong data (Cut)"],
-        ["Ctrl + V", "Menempelkan data (Paste)"],
-        ["Ctrl + Z", "Membatalkan perintah terakhir (Undo)"],
-        ["Ctrl + Y", "Mengulangi perintah terakhir (Redo)"],
-        ["Ctrl + S", "Menyimpan file (Save)"],
-        ["Ctrl + A", "Memilih semua data"],
-        ["Ctrl + P", "Mencetak file (Print)"],
-        ["Ctrl + F", "Mencari data (Find)"],
-        ["Ctrl + H", "Mengganti data (Replace)"],
-        ["Ctrl + Arrow", "Berpindah ke ujung area data"],
-        ["Ctrl + Shift + Arrow", "Memblok hingga ujung area data"],
-        ["Ctrl + Home", "Berpindah ke sel A1"],
-        ["Ctrl + End", "Berpindah ke sel terakhir yang digunakan"],
-        ["Ctrl + Space", "Memilih seluruh kolom"],
-        ["Shift + Space", "Memilih seluruh baris"],
-        ["Ctrl + +", "Menambahkan baris/kolom baru"],
-        ["Ctrl + -", "Menghapus baris/kolom"],
-        ["Ctrl + D", "Menyalin ke bawah (Fill Down)"],
-        ["Ctrl + R", "Menyalin ke kanan (Fill Right)"],
-        ["Ctrl + B", "Menebalkan teks (Bold)"],
-        ["Ctrl + I", "Memiringkan teks (Italic)"],
-        ["Ctrl + U", "Memberi garis bawah (Underline)"],
-        ["Ctrl + 1", "Membuka menu Format Cells"],
-        ["Alt + =", "Menjumlahkan otomatis (AutoSum)"],
-        ["F2", "Mengedit isi sel aktif"],
-        ["F4", "Mengunci rumus / Referensi absolut ($)"],
-        ["Ctrl + T", "Mengubah rentang data menjadi Tabel"],
-        ["Shift + F11", "Menambahkan sheet baru"]
+    // Clipboard & Editing
+    ["Ctrl + C", "Menyalin data (Copy)"],
+    ["Ctrl + X", "Memotong data (Cut)"],
+    ["Ctrl + V", "Menempelkan data (Paste)"],
+    ["Ctrl + Z", "Membatalkan perintah terakhir (Undo)"],
+    ["Ctrl + Y", "Mengulangi perintah terakhir (Redo)"],
+    ["Ctrl + S", "Menyimpan file (Save)"],
+    ["Ctrl + A", "Memilih semua data"],
+    ["Ctrl + P", "Mencetak file (Print)"],
+    ["Ctrl + F", "Mencari data (Find)"],
+    ["Ctrl + H", "Mengganti data (Replace)"],
+
+    // Navigasi
+    ["Ctrl + Arrow", "Berpindah ke ujung area data"],
+    ["Ctrl + Shift + Arrow", "Memblok hingga ujung area data"],
+    ["Ctrl + Home", "Berpindah ke sel A1"],
+    ["Ctrl + End", "Berpindah ke sel terakhir yang digunakan"],
+    ["Ctrl + Page Up", "Pindah ke sheet sebelumnya"],
+    ["Ctrl + Page Down", "Pindah ke sheet berikutnya"],
+
+    // Seleksi & Manipulasi
+    ["Ctrl + Space", "Memilih seluruh kolom"],
+    ["Shift + Space", "Memilih seluruh baris"],
+    ["Ctrl + +", "Menambahkan baris/kolom baru"],
+    ["Ctrl + -", "Menghapus baris/kolom"],
+    ["Ctrl + D", "Menyalin ke bawah (Fill Down)"],
+    ["Ctrl + R", "Menyalin ke kanan (Fill Right)"],
+    ["Ctrl + Enter", "Mengisi beberapa sel dengan nilai yang sama"],
+
+    // Formatting
+    ["Ctrl + B", "Menebalkan teks (Bold)"],
+    ["Ctrl + I", "Memiringkan teks (Italic)"],
+    ["Ctrl + U", "Memberi garis bawah (Underline)"],
+    ["Ctrl + 1", "Membuka menu Format Cells"],
+    ["Ctrl + Shift + $", "Format mata uang"],
+    ["Ctrl + Shift + %", "Format persen"],
+    ["Ctrl + Shift + #", "Format tanggal"],
+    ["Ctrl + Shift + ~", "Format umum (General)"],
+
+    // Rumus & Perhitungan
+    ["Alt + =", "Menjumlahkan otomatis (AutoSum)"],
+    ["F2", "Mengedit isi sel aktif"],
+    ["F4", "Mengunci rumus / Referensi absolut ($)"],
+    ["Ctrl + `", "Menampilkan atau menyembunyikan rumus"],
+    ["Ctrl + Shift + Enter", "Membuat rumus array (Excel versi lama)"],
+
+    // Tabel & Analisis Data
+    ["Ctrl + T", "Mengubah rentang data menjadi Tabel"],
+    ["Alt + N + V", "Membuat Pivot Table"],
+    ["Alt + A + M", "Menghapus data duplikat"],
+    ["Alt + D + F + F", "Mengaktifkan Filter"],
+
+    // Sheet
+    ["Shift + F11", "Menambahkan sheet baru"],
+    ["Alt + H + O + R", "Mengganti nama sheet"]
     ];
 
     // FUNGSI RENDER TABEL
