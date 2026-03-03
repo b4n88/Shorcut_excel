@@ -3,131 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel Shortcut Pro - Offline Version</title>
+    <title>Excel Shortcut Pro - Pointcore.id</title>
     <style>
-        /* PENGATURAN WARNA (CSS VARIABLES) */
+        /* VARIABEL WARNA */
         :root {
-            --bg-body: #f5f6f7;
+            --bg-body: #f4f7f6;
             --bg-card: #ffffff;
-            --text-primary: #1a1a1a;
-            --text-secondary: #5f6368;
-            --excel-color: #217346;
-            --border-color: #dadce0;
-            --row-even: #f8f9fa; /* Shading baris genap */
-            --row-hover: #eaf2ed;
-            --badge-bg: #e8f0fe;
-            --badge-text: #1967d2;
-            --input-bg: #ffffff;
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --excel-green: #217346;
+            --pointcore-green: #43a047; /* Warna hijau senada logo */
+            --border-color: #dfe6e9;
+            --row-even: #f9f9f9;
+            --row-hover: #e8f5e9;
+            --badge-bg: #eef7f0;
+            --badge-text: #1a5a37;
         }
 
-        /* TEMA GELAP (DARK MODE) */
         [data-theme="dark"] {
             --bg-body: #121212;
             --bg-card: #1e1e1e;
-            --text-primary: #e8eaed;
-            --text-secondary: #9aa0a6;
-            --excel-color: #34a853;
-            --border-color: #3c4043;
-            --row-even: #252525; /* Shading baris genap dark mode */
-            --row-hover: #2d2d2d;
-            --badge-bg: #2d333b;
-            --badge-text: #8ab4f8;
-            --input-bg: #2d2d2d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b2bec3;
+            --excel-green: #2ecc71;
+            --border-color: #2d3436;
+            --row-even: #252525;
+            --row-hover: #2c3e50;
+            --badge-bg: #1b3022;
+            --badge-text: #a5d6a7;
         }
 
-        /* GAYA DASAR - Menggunakan Font Sistem (Tanpa API Fonts) */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-body);
             color: var(--text-primary);
             margin: 0;
             padding: 20px;
-            transition: background 0.2s ease;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .container {
-            max-width: 1000px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 800px;
             background: var(--bg-card);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
         }
 
-        /* HEADER & TOGGLE */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* LOGO & HEADER */
+        .header-section {
+            text-align: center;
             margin-bottom: 30px;
-            border-bottom: 2px solid var(--excel-color);
-            padding-bottom: 15px;
         }
 
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-            color: var(--excel-color);
-            font-weight: 700;
+        .logo-img {
+            max-width: 120px; /* Ukuran logo */
+            height: auto;
+            margin-bottom: 10px;
         }
 
-        .mode-toggle {
-            padding: 8px 16px;
-            cursor: pointer;
-            background-color: var(--excel-color);
+        .header-section h1 {
+            color: var(--excel-green);
+            margin: 5px 0;
+            font-size: 26px;
+        }
+
+        .theme-toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--excel-green);
             color: white;
             border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
         }
 
-        /* AREA PENCARIAN */
-        .search-area {
-            margin-bottom: 20px;
+        /* SEARCH AREA */
+        .search-box {
+            margin-bottom: 25px;
         }
 
         .search-input {
             width: 100%;
-            padding: 15px;
+            padding: 15px 20px;
             font-size: 16px;
             border: 2px solid var(--border-color);
-            border-radius: 8px;
-            background-color: var(--input-bg);
+            border-radius: 10px;
+            background: var(--bg-card);
             color: var(--text-primary);
-            box-sizing: border-box;
             outline: none;
+            transition: 0.3s;
         }
 
         .search-input:focus {
-            border-color: var(--excel-color);
+            border-color: var(--excel-green);
+            box-shadow: 0 0 10px rgba(33, 115, 70, 0.1);
         }
 
-        /* TABEL SHORTCUT */
+        /* TABLE STYLE */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
         }
 
         th {
-            background-color: var(--row-even);
-            color: var(--text-secondary);
             text-align: left;
             padding: 12px 15px;
             font-size: 13px;
             text-transform: uppercase;
+            color: var(--text-secondary);
             border-bottom: 2px solid var(--border-color);
         }
 
         td {
-            padding: 14px 15px;
+            padding: 15px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 15px;
+            font-size: 14px;
         }
 
-        /* SHADING BERWARNA GELAP PADA BARIS GENAP */
         tbody tr:nth-child(even) {
             background-color: var(--row-even);
         }
@@ -136,144 +138,158 @@
             background-color: var(--row-hover);
         }
 
-        /* GAYA TULISAN SHORTCUT */
-        .shortcut-text {
-            display: inline-block;
+        .shortcut-badge {
             background: var(--badge-bg);
             color: var(--badge-text);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-family: Consolas, "Courier New", monospace;
-            font-weight: 600;
-            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: 'Consolas', monospace;
+            font-weight: bold;
+            font-size: 13px;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
-        .category-text {
-            color: var(--excel-color);
-            font-weight: 600;
-            font-size: 12px;
+        /* FOOTER */
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-secondary);
         }
 
-        .empty-msg {
+        footer b {
+            color: var(--excel-green);
+        }
+
+        .no-result {
             display: none;
             text-align: center;
-            padding: 30px;
+            padding: 40px;
             color: var(--text-secondary);
+            font-style: italic;
         }
     </style>
 </head>
 <body data-theme="light">
 
 <div class="container">
-    <div class="header">
+    <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">Mode Gelap</button>
+
+    <div class="header-section">
+        <!-- Gantilah 'logo.jpg' dengan nama file logo anda -->
+        <img src="logo.jpg" alt="Pointcore Logo" class="logo-img" onerror="this.style.display='none'">
         <h1>Excel Shortcut</h1>
-        <button class="mode-toggle" id="themeToggle" onclick="switchTheme()">Mode Gelap</button>
+        <p style="color: var(--text-secondary); font-size: 14px; margin-top: 0;">Produktivitas Lebih Cepat dengan Shortcut Keyboard</p>
     </div>
 
-    <div class="search-area">
-        <input type="text" id="searchInput" class="search-input" placeholder="Cari tombol atau kegunaan... (otomatis muncul)" oninput="doSearch()">
+    <div class="search-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="Ketik shortcut atau kegunaan... (misal: 'Copy')" oninput="handleSearch()">
     </div>
 
     <table id="shortcutTable">
         <thead>
             <tr>
-                <th width="20%">Kategori</th>
-                <th width="30%">Shortcut</th>
-                <th width="50%">Fungsi Utama</th>
+                <th width="35%">Kombinasi Tombol</th>
+                <th width="65%">Fungsi Utama</th>
             </tr>
         </thead>
         <tbody id="tableBody">
-            <!-- Data akan dimuat oleh JavaScript -->
+            <!-- Data akan diisi via JS -->
         </tbody>
     </table>
-    
-    <div id="noData" class="empty-msg">Data shortcut tidak ditemukan...</div>
+
+    <div id="noData" class="no-result">Shortcut tidak ditemukan...</div>
+
+    <footer>
+        program by <b>Albani</b> | <b>Pointcore.id</b>
+    </footer>
 </div>
 
 <script>
-    // DATA DATA SHORTCUT (TANPA API)
-    const dataShortcut = [
-        ["Editing & Clipboard", "Ctrl + C", "Menyalin data"],
-        ["Editing & Clipboard", "Ctrl + X", "Memotong data"],
-        ["Editing & Clipboard", "Ctrl + V", "Menempelkan data"],
-        ["Editing & Clipboard", "Ctrl + Z", "Membatalkan perintah terakhir (Undo)"],
-        ["Editing & Clipboard", "Ctrl + Y", "Mengulangi perintah terakhir (Redo)"],
-        ["Editing & Clipboard", "Ctrl + A", "Memilih semua data"],
-        ["Editing & Clipboard", "Ctrl + S", "Menyimpan file"],
-        ["Editing & Clipboard", "Ctrl + P", "Mencetak file"],
-        ["Editing & Clipboard", "Ctrl + F", "Mencari data"],
-        ["Editing & Clipboard", "Ctrl + H", "Mengganti data (Replace)"],
-        ["Navigation", "Ctrl + Arrow", "Berpindah ke ujung area data"],
-        ["Navigation", "Ctrl + Shift + Arrow", "Memblok hingga ujung area data"],
-        ["Navigation", "Ctrl + Home", "Berpindah ke sel A1"],
-        ["Navigation", "Ctrl + End", "Berpindah ke sel terakhir yang digunakan"],
-        ["Selection & Data", "Ctrl + Space", "Memilih seluruh kolom"],
-        ["Selection & Data", "Shift + Space", "Memilih seluruh baris"],
-        ["Selection & Data", "Ctrl + +", "Menambahkan baris/kolom baru"],
-        ["Selection & Data", "Ctrl + -", "Menghapus baris/kolom"],
-        ["Selection & Data", "Ctrl + D", "Menyalin ke bawah (Fill Down)"],
-        ["Selection & Data", "Ctrl + R", "Menyalin ke kanan (Fill Right)"],
-        ["Selection & Data", "Ctrl + Enter", "Mengisi beberapa sel dengan nilai yang sama"],
-        ["Formatting", "Ctrl + B", "Menebalkan teks (Bold)"],
-        ["Formatting", "Ctrl + I", "Memiringkan teks (Italic)"],
-        ["Formatting", "Ctrl + U", "Memberi garis bawah (Underline)"],
-        ["Formatting", "Ctrl + 1", "Membuka menu Format Cells"],
-        ["Formatting", "Ctrl + Shift + $", "Format mata uang"],
-        ["Formatting", "Ctrl + Shift + %", "Format persen"],
-        ["Formatting", "Ctrl + Shift + #", "Format tanggal"],
-        ["Formatting", "Ctrl + Shift + ~", "Format umum (General)"],
-        ["Formulas", "F2", "Mengedit isi sel aktif"],
-        ["Formulas", "Alt + =", "Menjumlahkan otomatis (AutoSum)"],
-        ["Formulas", "Ctrl + `", "Menampilkan/Menyembunyikan rumus"],
-        ["Formulas", "F4", "Mengubah referensi absolut ($)"],
-        ["Tables & Pivot", "Ctrl + T", "Mengubah data menjadi Table"],
-        ["Tables & Pivot", "Alt + N + V", "Membuat Pivot Table"],
-        ["Sheets", "Shift + F11", "Menambahkan sheet baru"],
-        ["Sheets", "Ctrl + Page Up", "Pindah ke sheet sebelumnya"],
-        ["Sheets", "Ctrl + Page Down", "Pindah ke sheet berikutnya"]
+    // DATA LENGKAP
+    const masterData = [
+        ["Ctrl + C", "Menyalin data (Copy)"],
+        ["Ctrl + X", "Memotong data (Cut)"],
+        ["Ctrl + V", "Menempelkan data (Paste)"],
+        ["Ctrl + Z", "Membatalkan perintah terakhir (Undo)"],
+        ["Ctrl + Y", "Mengulangi perintah terakhir (Redo)"],
+        ["Ctrl + S", "Menyimpan file (Save)"],
+        ["Ctrl + A", "Memilih semua data"],
+        ["Ctrl + P", "Mencetak file (Print)"],
+        ["Ctrl + F", "Mencari data (Find)"],
+        ["Ctrl + H", "Mengganti data (Replace)"],
+        ["Ctrl + Arrow", "Berpindah ke ujung area data"],
+        ["Ctrl + Shift + Arrow", "Memblok hingga ujung area data"],
+        ["Ctrl + Home", "Berpindah ke sel A1"],
+        ["Ctrl + End", "Berpindah ke sel terakhir yang digunakan"],
+        ["Ctrl + Space", "Memilih seluruh kolom"],
+        ["Shift + Space", "Memilih seluruh baris"],
+        ["Ctrl + +", "Menambahkan baris/kolom baru"],
+        ["Ctrl + -", "Menghapus baris/kolom"],
+        ["Ctrl + D", "Menyalin ke bawah (Fill Down)"],
+        ["Ctrl + R", "Menyalin ke kanan (Fill Right)"],
+        ["Ctrl + B", "Menebalkan teks (Bold)"],
+        ["Ctrl + I", "Memiringkan teks (Italic)"],
+        ["Ctrl + U", "Memberi garis bawah (Underline)"],
+        ["Ctrl + 1", "Membuka menu Format Cells"],
+        ["Alt + =", "Menjumlahkan otomatis (AutoSum)"],
+        ["F2", "Mengedit isi sel aktif"],
+        ["F4", "Mengunci rumus / Referensi absolut ($)"],
+        ["Ctrl + T", "Mengubah rentang data menjadi Tabel"],
+        ["Shift + F11", "Menambahkan sheet baru"]
     ];
 
-    // FUNGSI UNTUK MERENDER TABEL
-    function renderTable(list) {
+    // FUNGSI RENDER TABEL
+    function renderTable(data, limit = false) {
         const body = document.getElementById("tableBody");
         const noData = document.getElementById("noData");
+        const table = document.getElementById("shortcutTable");
+        
         body.innerHTML = "";
+        
+        // Jika limit true (saat awal), ambil 6 baris saja
+        const displayList = limit ? data.slice(0, 6) : data;
 
-        if (list.length === 0) {
+        if (displayList.length === 0) {
             noData.style.display = "block";
+            table.style.display = "none";
             return;
         }
 
         noData.style.display = "none";
-        list.forEach(item => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td><span class="category-text">${item[0]}</span></td>
-                <td><span class="shortcut-text">${item[1]}</span></td>
-                <td>${item[2]}</td>
-            `;
-            body.appendChild(row);
+        table.style.display = "table";
+
+        displayList.forEach(item => {
+            const row = `<tr>
+                <td><span class="shortcut-badge">${item[0]}</span></td>
+                <td>${item[1]}</td>
+            </tr>`;
+            body.innerHTML += row;
         });
     }
 
-    // FUNGSI PENCARIAN OTOMATIS (LIVE SEARCH)
-    function doSearch() {
-        const keyword = document.getElementById("searchInput").value.toLowerCase();
-        const filtered = dataShortcut.filter(item => {
-            return item[0].toLowerCase().includes(keyword) || 
-                   item[1].toLowerCase().includes(keyword) || 
-                   item[2].toLowerCase().includes(keyword);
-        });
-        renderTable(filtered);
+    // FUNGSI PENCARIAN
+    function handleSearch() {
+        const query = document.getElementById("searchInput").value.toLowerCase();
+        
+        if (query === "") {
+            // Jika kosong, balikkan ke tampilan awal (hanya 6 baris)
+            renderTable(masterData, true);
+        } else {
+            // Jika mencari, tampilkan semua yang cocok (tanpa limit)
+            const filtered = masterData.filter(item => 
+                item[0].toLowerCase().includes(query) || 
+                item[1].toLowerCase().includes(query)
+            );
+            renderTable(filtered, false);
+        }
     }
 
-    // FUNGSI DARK/DAY MODE
-    function switchTheme() {
+    // FUNGSI DARK MODE
+    function toggleTheme() {
         const body = document.body;
-        const btn = document.getElementById("themeToggle");
-        const isLight = body.getAttribute("data-theme") === "light";
-
-        if (isLight) {
+        const btn = document.getElementById("themeBtn");
+        if (body.getAttribute("data-theme") === "light") {
             body.setAttribute("data-theme", "dark");
             btn.innerText = "Mode Terang";
         } else {
@@ -282,8 +298,8 @@
         }
     }
 
-    // JALANKAN SAAT HALAMAN DIBUKA
-    renderTable(dataShortcut);
+    // LOAD PERTAMA KALI
+    renderTable(masterData, true);
 </script>
 
 </body>
