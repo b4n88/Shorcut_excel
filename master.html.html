@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Shortcut Pro - Offline Version</title>
+    <style>
+        /* PENGATURAN WARNA (CSS VARIABLES) */
+        :root {
+            --bg-body: #f5f6f7;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #5f6368;
+            --excel-color: #217346;
+            --border-color: #dadce0;
+            --row-even: #f8f9fa; /* Shading baris genap */
+            --row-hover: #eaf2ed;
+            --badge-bg: #e8f0fe;
+            --badge-text: #1967d2;
+            --input-bg: #ffffff;
+        }
+
+        /* TEMA GELAP (DARK MODE) */
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-primary: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --excel-color: #34a853;
+            --border-color: #3c4043;
+            --row-even: #252525; /* Shading baris genap dark mode */
+            --row-hover: #2d2d2d;
+            --badge-bg: #2d333b;
+            --badge-text: #8ab4f8;
+            --input-bg: #2d2d2d;
+        }
+
+        /* GAYA DASAR - Menggunakan Font Sistem (Tanpa API Fonts) */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            transition: background 0.2s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        /* HEADER & TOGGLE */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--excel-color);
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--excel-color);
+            font-weight: 700;
+        }
+
+        .mode-toggle {
+            padding: 8px 16px;
+            cursor: pointer;
+            background-color: var(--excel-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* AREA PENCARIAN */
+        .search-area {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--excel-color);
+        }
+
+        /* TABEL SHORTCUT */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            background-color: var(--row-even);
+            color: var(--text-secondary);
+            text-align: left;
+            padding: 12px 15px;
+            font-size: 13px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 15px;
+        }
+
+        /* SHADING BERWARNA GELAP PADA BARIS GENAP */
+        tbody tr:nth-child(even) {
+            background-color: var(--row-even);
+        }
+
+        tbody tr:hover {
+            background-color: var(--row-hover);
+        }
+
+        /* GAYA TULISAN SHORTCUT */
+        .shortcut-text {
+            display: inline-block;
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: Consolas, "Courier New", monospace;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .category-text {
+            color: var(--excel-color);
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .empty-msg {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="container">
+    <div class="header">
+        <h1>Excel Shortcut</h1>
+        <button class="mode-toggle" id="themeToggle" onclick="switchTheme()">Mode Gelap</button>
+    </div>
+
+    <div class="search-area">
+        <input type="text" id="searchInput" class="search-input" placeholder="Cari tombol atau kegunaan... (otomatis muncul)" oninput="doSearch()">
+    </div>
+
+    <table id="shortcutTable">
+        <thead>
+            <tr>
+                <th width="20%">Kategori</th>
+                <th width="30%">Shortcut</th>
+                <th width="50%">Fungsi Utama</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Data akan dimuat oleh JavaScript -->
+        </tbody>
+    </table>
+    
+    <div id="noData" class="empty-msg">Data shortcut tidak ditemukan...</div>
+</div>
+
+<script>
+    // DATA DATA SHORTCUT (TANPA API)
+    const dataShortcut = [
+        ["Editing & Clipboard", "Ctrl + C", "Menyalin data"],
+        ["Editing & Clipboard", "Ctrl + X", "Memotong data"],
+        ["Editing & Clipboard", "Ctrl + V", "Menempelkan data"],
+        ["Editing & Clipboard", "Ctrl + Z", "Membatalkan perintah terakhir (Undo)"],
+        ["Editing & Clipboard", "Ctrl + Y", "Mengulangi perintah terakhir (Redo)"],
+        ["Editing & Clipboard", "Ctrl + A", "Memilih semua data"],
+        ["Editing & Clipboard", "Ctrl + S", "Menyimpan file"],
+        ["Editing & Clipboard", "Ctrl + P", "Mencetak file"],
+        ["Editing & Clipboard", "Ctrl + F", "Mencari data"],
+        ["Editing & Clipboard", "Ctrl + H", "Mengganti data (Replace)"],
+        ["Navigation", "Ctrl + Arrow", "Berpindah ke ujung area data"],
+        ["Navigation", "Ctrl + Shift + Arrow", "Memblok hingga ujung area data"],
+        ["Navigation", "Ctrl + Home", "Berpindah ke sel A1"],
+        ["Navigation", "Ctrl + End", "Berpindah ke sel terakhir yang digunakan"],
+        ["Selection & Data", "Ctrl + Space", "Memilih seluruh kolom"],
+        ["Selection & Data", "Shift + Space", "Memilih seluruh baris"],
+        ["Selection & Data", "Ctrl + +", "Menambahkan baris/kolom baru"],
+        ["Selection & Data", "Ctrl + -", "Menghapus baris/kolom"],
+        ["Selection & Data", "Ctrl + D", "Menyalin ke bawah (Fill Down)"],
+        ["Selection & Data", "Ctrl + R", "Menyalin ke kanan (Fill Right)"],
+        ["Selection & Data", "Ctrl + Enter", "Mengisi beberapa sel dengan nilai yang sama"],
+        ["Formatting", "Ctrl + B", "Menebalkan teks (Bold)"],
+        ["Formatting", "Ctrl + I", "Memiringkan teks (Italic)"],
+        ["Formatting", "Ctrl + U", "Memberi garis bawah (Underline)"],
+        ["Formatting", "Ctrl + 1", "Membuka menu Format Cells"],
+        ["Formatting", "Ctrl + Shift + $", "Format mata uang"],
+        ["Formatting", "Ctrl + Shift + %", "Format persen"],
+        ["Formatting", "Ctrl + Shift + #", "Format tanggal"],
+        ["Formatting", "Ctrl + Shift + ~", "Format umum (General)"],
+        ["Formulas", "F2", "Mengedit isi sel aktif"],
+        ["Formulas", "Alt + =", "Menjumlahkan otomatis (AutoSum)"],
+        ["Formulas", "Ctrl + `", "Menampilkan/Menyembunyikan rumus"],
+        ["Formulas", "F4", "Mengubah referensi absolut ($)"],
+        ["Tables & Pivot", "Ctrl + T", "Mengubah data menjadi Table"],
+        ["Tables & Pivot", "Alt + N + V", "Membuat Pivot Table"],
+        ["Sheets", "Shift + F11", "Menambahkan sheet baru"],
+        ["Sheets", "Ctrl + Page Up", "Pindah ke sheet sebelumnya"],
+        ["Sheets", "Ctrl + Page Down", "Pindah ke sheet berikutnya"]
+    ];
+
+    // FUNGSI UNTUK MERENDER TABEL
+    function renderTable(list) {
+        const body = document.getElementById("tableBody");
+        const noData = document.getElementById("noData");
+        body.innerHTML = "";
+
+        if (list.length === 0) {
+            noData.style.display = "block";
+            return;
+        }
+
+        noData.style.display = "none";
+        list.forEach(item => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td><span class="category-text">${item[0]}</span></td>
+                <td><span class="shortcut-text">${item[1]}</span></td>
+                <td>${item[2]}</td>
+            `;
+            body.appendChild(row);
+        });
+    }
+
+    // FUNGSI PENCARIAN OTOMATIS (LIVE SEARCH)
+    function doSearch() {
+        const keyword = document.getElementById("searchInput").value.toLowerCase();
+        const filtered = dataShortcut.filter(item => {
+            return item[0].toLowerCase().includes(keyword) || 
+                   item[1].toLowerCase().includes(keyword) || 
+                   item[2].toLowerCase().includes(keyword);
+        });
+        renderTable(filtered);
+    }
+
+    // FUNGSI DARK/DAY MODE
+    function switchTheme() {
+        const body = document.body;
+        const btn = document.getElementById("themeToggle");
+        const isLight = body.getAttribute("data-theme") === "light";
+
+        if (isLight) {
+            body.setAttribute("data-theme", "dark");
+            btn.innerText = "Mode Terang";
+        } else {
+            body.setAttribute("data-theme", "light");
+            btn.innerText = "Mode Gelap";
+        }
+    }
+
+    // JALANKAN SAAT HALAMAN DIBUKA
+    renderTable(dataShortcut);
+</script>
+
+</body>
+</html>
