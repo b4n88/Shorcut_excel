@@ -209,7 +209,7 @@
     // DATA LENGKAP
     const masterData = [
     // Fungsi
-    ["Filter (By Tanggal), "=FILTER('REKAP HARIAN'!A2:O1001,'REKAP HARIAN'!B2:B>=RESUME!L6, 'REKAP HARIAN'!B2:B<=RESUME!M6)"],
+    ["Filter", "Memfilter data =FILTER('REKAP HARIAN'!A2:O1001,'REKAP HARIAN'!B2:B>=RESUME!L6, 'REKAP HARIAN'!B2:B<=RESUME!M6)"],
     ["Lambda", "Membuat fungsi sendiri, Cara Pakai =LAMBDA(a,b,a*b)(2,3)"],
     ["Scan", "Mengubah isi cell. gabungan Lambda ini adalah fungsi untuk mengisi cell pertama yg berisi data, Cara pakai = =SCAN(' ',B3:AJ3,LAMBDA(a,b,IF(b='',a,b)))"],
     ["Query", "=QUERY(A1:D,'SELECT B, SUM(D) WHERE D>500000 GROUP BY B ORDER BY SUM(D) DESC LABEL SUM(D) 'Total Sales'',1)"],
